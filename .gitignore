@@ -11,3 +11,4 @@ tex/*.toc
 tex/*/*.aux
 .DS_Store
 tex/*.listing
+~$*
