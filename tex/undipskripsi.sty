@@ -1,0 +1,185 @@
+% =====================================================================
+%  undipskripsi.sty
+%  Format skripsi Departemen Informatika FSM Universitas Diponegoro,
+%  mengikuti "02. Template dan Format Penulisan Skripsi V. 2024.10".
+%  Compile: xelatex -> biber -> xelatex -> xelatex   (lihat Makefile)
+% =====================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{undipskripsi}[2026/10/19 Format Skripsi Informatika UNDIP]
+
+% ---------- Halaman: A4, margin atas 3, kiri 3, kanan 2.5, bawah 2.5 cm ----
+\RequirePackage[a4paper,top=3cm,left=3cm,right=2.5cm,bottom=2.5cm,
+  footskip=1.25cm,headheight=14pt]{geometry}
+
+% ---------- Bahasa ----------------------------------------------------
+\RequirePackage[american]{babel}
+\babelprovide[main,import,hyphenrules=indonesian]{indonesian}
+\RequirePackage{csquotes}
+
+% ---------- Fontasi: Times New Roman 12 pt (fallback TeX Gyre Termes) ---
+\RequirePackage{fontspec}
+\IfFontExistsTF{Times New Roman}
+  {\setmainfont{Times New Roman}}
+  {\setmainfont{TeX Gyre Termes}}
+\IfFontExistsTF{Courier New}
+  {\setmonofont{Courier New}}
+  {\setmonofont{TeX Gyre Cursor}}
+\RequirePackage[fleqn]{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{unicode-math}
+\setmathfont{STIXTwoMath-Regular.otf}% mirip Times; tersedia di TeX Live/MacTeX
+
+% ---------- Spasi 1,5 (setara "1.5 lines" Word untuk TNR 12 pt) --------
+\RequirePackage{setspace}
+\setstretch{1.43}
+\setlength{\parindent}{1cm}      % indentasi baris pertama 1 cm
+\setlength{\parskip}{0pt}        % tanpa before / after paragraph
+\RequirePackage{indentfirst}     % paragraf pertama setelah judul juga menjorok
+\clubpenalty=10000 \widowpenalty=10000
+\setlength{\emergencystretch}{2em}
+\raggedbottom
+
+% ---------- Nomor halaman: kanan bawah ---------------------------------
+\RequirePackage{fancyhdr}
+\fancypagestyle{undip}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}%
+  \fancyfoot[R]{\thepage}}
+\fancypagestyle{plain}{\fancyhf{}\renewcommand{\headrulewidth}{0pt}%
+  \fancyfoot[R]{\thepage}}
+\pagestyle{undip}
+
+% ---------- Judul bab dan sub bab --------------------------------------
+\RequirePackage{titlesec}
+\setcounter{secnumdepth}{3}      % 1.1.1.1 paling dalam
+\setcounter{tocdepth}{3}
+\titleformat{\chapter}[display]
+  {\normalfont\fontsize{14}{20.7}\selectfont\bfseries\centering}
+  {BAB \Roman{chapter}}{0pt}{\MakeUppercase}
+\titleformat{name=\chapter,numberless}[block]
+  {\normalfont\fontsize{14}{20.7}\selectfont\bfseries\centering}
+  {}{0pt}{\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{-14pt}{20.7pt}
+\titleformat{\section}{\normalfont\bfseries}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalfont\bfseries}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalfont\bfseries}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{12pt}{0pt}       % before 12 pt, after 0 pt
+\titlespacing*{\subsection}{0pt}{12pt}{0pt}
+\titlespacing*{\subsubsection}{0pt}{12pt}{0pt}
+
+% ---------- Daftar isi, daftar tabel, daftar gambar --------------------
+\RequirePackage{titletoc}
+\newcommand{\babroman}[1]{\uppercase\expandafter{\romannumeral#1}}
+\titlecontents{chapter}[0pt]{}
+  {BAB \babroman{\thecontentslabel}\ \MakeUppercase}{\MakeUppercase}{\titlerule*[0.45em]{.}\contentspage}
+\titlecontents{section}[1.2cm]{}
+  {\contentslabel[\thecontentslabel.]{1.2cm}}{}{\titlerule*[0.45em]{.}\contentspage}
+\titlecontents{subsection}[2.7cm]{}
+  {\contentslabel[\thecontentslabel.]{1.5cm}}{}{\titlerule*[0.45em]{.}\contentspage}
+\titlecontents{subsubsection}[4.5cm]{}
+  {\contentslabel[\thecontentslabel.]{1.8cm}}{}{\titlerule*[0.45em]{.}\contentspage}
+\titlecontents{figure}[2.3cm]{}
+  {\contentslabel[Gambar \thecontentslabel.]{2.3cm}}{}{\titlerule*[0.45em]{.}\contentspage}
+\titlecontents{table}[2.0cm]{}
+  {\contentslabel[Tabel \thecontentslabel.]{2.0cm}}{}{\titlerule*[0.45em]{.}\contentspage}
+
+\addto\captionsindonesian{%
+  \renewcommand{\contentsname}{DAFTAR ISI}%
+  \renewcommand{\listtablename}{DAFTAR TABEL}%
+  \renewcommand{\listfigurename}{DAFTAR GAMBAR}%
+  \renewcommand{\bibname}{DAFTAR PUSTAKA}%
+  \renewcommand{\figurename}{Gambar}%
+  \renewcommand{\tablename}{Tabel}}
+
+% ---------- Caption: Tabel di atas, Gambar di bawah, nomor per bab -----
+\RequirePackage{graphicx}
+\RequirePackage[labelsep=space,font=normalsize,justification=centering,
+  singlelinecheck=false]{caption}
+\captionsetup[table]{position=above,skip=4pt}
+\captionsetup[figure]{position=below,skip=6pt}
+\counterwithin{figure}{chapter}
+\counterwithin{table}{chapter}
+
+% ---------- Tabel: isi satu spasi, header abu-abu 25 %, kolom "No" ------
+\RequirePackage{array,tabularx,longtable,booktabs,multirow,makecell}
+\RequirePackage[table]{xcolor}
+\newcommand{\hdr}{\rowcolor{gray!25}}               % shading header 25 %
+\newcommand{\hrow}{\rule[-0.32cm]{0pt}{1cm}}         % tinggi header 1,0 cm
+\newcommand{\tabsetup}{\setstretch{1}\small\renewcommand{\arraystretch}{1.15}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+% ---------- Persamaan: rata kiri, nomor di kanan (3.1) ----------------
+\setlength{\mathindent}{1cm}
+\numberwithin{equation}{chapter}
+% Keterangan simbol setelah persamaan
+\newenvironment{keterangan}
+  {\par\noindent Keterangan:\par\nopagebreak\noindent
+   \tabularx{\linewidth}{@{\hspace{1cm}}l@{\ \ :\ \ }Y@{}}}
+  {\endtabularx\par\vspace{6pt}}
+
+% ---------- Pemerian: hanya nomor / huruf -------------------------------
+\RequirePackage{enumitem}
+\setlist[enumerate,1]{label=\arabic*.,leftmargin=0.75cm,itemsep=0pt,topsep=0pt,parsep=0pt}
+\setlist[enumerate,2]{label=\alph*.,leftmargin=0.75cm,itemsep=0pt,topsep=0pt,parsep=0pt}
+\setlist[itemize]{label=\textbullet,leftmargin=0.75cm,itemsep=0pt,topsep=0pt}% jangan dipakai (aturan template)
+
+% ---------- Source code: tabel 2 baris 1 kolom, Courier New 10 pt -----
+\RequirePackage{listings}
+\RequirePackage[most]{tcolorbox}
+\tcbuselibrary{listings}
+\newcounter{sourcecode}[chapter]
+\renewcommand{\thesourcecode}{\thechapter.\arabic{sourcecode}}
+\lstset{basicstyle=\fontsize{10}{12}\selectfont\ttfamily,columns=fullflexible,
+  keepspaces=true,breaklines=true,showstringspaces=false,tabsize=4,
+  extendedchars=true,inputencoding=utf8}
+\newtcblisting{sourcecode}[2]{enhanced,breakable,listing only,sharp corners,
+  colback=white,colframe=black,boxrule=0.5pt,toprule=0.5pt,titlerule=0.5pt,
+  colbacktitle=white,coltitle=black,fonttitle=\normalfont\setstretch{1},
+  left=4pt,right=4pt,top=2pt,bottom=2pt,
+  title={\refstepcounter{sourcecode}\label{#2}Source Code \thesourcecode:\\#1},
+  listing options={language=Python}}
+
+% ---------- Gambar ------------------------------------------------------
+\RequirePackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,fit,backgrounds,shapes.geometric,shapes.misc,calc}
+\RequirePackage{float}
+\setcounter{topnumber}{3}\setcounter{totalnumber}{4}
+\renewcommand{\topfraction}{0.9}\renewcommand{\textfraction}{0.08}
+\renewcommand{\floatpagefraction}{0.75}
+
+% ---------- Daftar pustaka: APA 7th ------------------------------------
+\RequirePackage[style=apa,backend=biber,language=american,autolang=none]{biblatex}
+\setlength{\bibhang}{1.27cm}
+
+% ---------- Tautan ------------------------------------------------------
+\RequirePackage[hidelinks,bookmarksnumbered]{hyperref}
+\RequirePackage{xurl}
+\urlstyle{same}
+
+% ---------- Perintah bantu ---------------------------------------------
+% Judul halaman depan (tanpa nomor) + entri daftar isi
+\newcommand{\frontchapter}[1]{%
+  \chapter*{#1}\addcontentsline{toc}{chapter}{#1}}
+% Lampiran: "LAMPIRAN 1. Judul"
+\newcounter{lampiran}
+\newcommand{\lampiran}[1]{%
+  \refstepcounter{lampiran}%
+  \chapter*{LAMPIRAN \thelampiran. #1}%
+  \addcontentsline{toc}{chapter}{LAMPIRAN \thelampiran. #1}}
+% Data penulis
+\newcommand{\judul}[1]{\def\@judul{#1}}
+\newcommand{\judulsampul}[1]{\def\@judulsampul{#1}}
+\newcommand{\penulis}[1]{\def\@penulis{#1}}
+\newcommand{\nim}[1]{\def\@nim{#1}}
+\newcommand{\tahun}[1]{\def\@tahun{#1}}
+\newcommand{\pembimbingsatu}[2]{\def\@pbsatu{#1}\def\@pbsatunip{#2}}
+\newcommand{\pembimbingdua}[2]{\def\@pbdua{#1}\def\@pbduanip{#2}}
+\newcommand{\tanggalpernyataan}[1]{\def\@tglpernyataan{#1}}
+\newcommand{\thejudul}{\@judul}
+\newcommand{\thepenulis}{\@penulis}
+\newcommand{\thenim}{\@nim}
+\newcommand{\thetanggal}{\@tglpernyataan}
+\newcommand{\thepbsatu}{\@pbsatu}\newcommand{\thepbsatunip}{\@pbsatunip}
+\newcommand{\thepbdua}{\@pbdua}\newcommand{\thepbduanip}{\@pbduanip}
+
+\endinput

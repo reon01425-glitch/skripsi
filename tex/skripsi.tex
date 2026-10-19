@@ -1,0 +1,63 @@
+% =====================================================================
+%  Skripsi — Cipta Fikri Wiratama
+%  Departemen Informatika, FSM, Universitas Diponegoro
+%  Format: 02. Template dan Format Penulisan Skripsi V. 2024.10
+%  Build : make   (xelatex + biber)
+% =====================================================================
+\documentclass[12pt,a4paper,oneside]{report}
+\usepackage{undipskripsi}
+\addbibresource{references.bib}
+
+% ---------------- Data skripsi (ubah di sini) -------------------------
+\judul{Asisten Virtual Berbasis \textit{Process-Aware Workflow} GraphRAG untuk Layanan Persuratan Akademik pada Sistem E-Office (Studi Kasus: Fakultas Sains dan Matematika Universitas Diponegoro)}
+\penulis{Cipta Fikri Wiratama}
+\nim{24060122XXXXXX}% TODO: isi NIM
+\tahun{2026}
+\pembimbingsatu{Dr. Indra Waspada, S.T., M.T.I.}{NIP. ........................}% TODO: cek gelar dan NIP
+\pembimbingdua{.....................................}{NIP. ........................}% TODO: pembimbing 2 (jika ada)
+\tanggalpernyataan{.. ........ 2026}
+
+% Nama-nama yang sering dipakai
+\newcommand{\wgr}{\textit{Process-Aware Workflow} GraphRAG}
+\newcommand{\eoffice}{E-Office}
+\newcommand{\code}[1]{\texttt{#1}}
+
+\begin{document}
+
+% =================== BAGIAN AWAL (romawi kecil) =======================
+\pagenumbering{roman}
+\input{front/sampul}
+\input{front/pernyataan}
+\input{front/pengesahan}
+\input{front/kata-pengantar}
+\input{front/persetujuan-publikasi}
+\input{front/abstrak}
+\input{front/abstract}
+
+\begingroup
+\setstretch{1.43}
+\clearpage
+\phantomsection\addcontentsline{toc}{chapter}{DAFTAR ISI}
+\tableofcontents
+\clearpage
+\phantomsection\addcontentsline{toc}{chapter}{DAFTAR TABEL}
+\listoftables
+\clearpage
+\phantomsection\addcontentsline{toc}{chapter}{DAFTAR GAMBAR}
+\listoffigures
+\endgroup
+
+% =================== BAGIAN INTI (arab, mulai 1) =======================
+\cleardoublepage
+\pagenumbering{arabic}
+\input{bab/bab1}
+\input{bab/bab2}
+\input{bab/bab3}
+\input{bab/bab4}
+\input{bab/bab5}
+
+% =================== BAGIAN AKHIR ====================================
+\printbibliography[heading=bibintoc,title={DAFTAR PUSTAKA}]
+\input{bab/lampiran}
+
+\end{document}

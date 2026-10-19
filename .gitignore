@@ -1,2 +1,12 @@
+tex/*.aux
+tex/*.bbl
+tex/*.bcf
+tex/*.blg
+tex/*.log
+tex/*.lof
+tex/*.lot
+tex/*.out
+tex/*.run.xml
+tex/*.toc
+tex/*/*.aux
 .DS_Store
-~$*

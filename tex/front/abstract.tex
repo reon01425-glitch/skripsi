@@ -1,0 +1,11 @@
+% ---------------- ABSTRACT (tidak ditulis miring) -----------------------
+\begin{otherlanguage}{american}
+\chapter*{ABSTRACT}\addcontentsline{toc}{chapter}{ABSTRACT}
+\begingroup\setstretch{1}\setlength{\parindent}{0pt}
+Academic administration at the Faculty of Science and Mathematics (FSM), Universitas Diponegoro, follows Standard Operating Procedures (SOPs), so administrative staff receive many repeated questions about step order, responsible officials, and required documents. A virtual assistant based on a Large Language Model (LLM) can answer such questions, but cloud-hosted LLMs add per-query costs and risk exposing student data, while conventional Retrieval-Augmented Generation (RAG) tends to mix steps from different SOPs and reverse their order. This research develops a virtual assistant integrated into the E-Office digital correspondence system and powered by a Process-Aware Workflow GraphRAG engine. Each SOP is modelled as a directed workflow graph that stores the actor, action, input documents, outputs, and duration of every step. A rule-based selector identifies the relevant procedure, its steps are serialized in order and complemented with supporting document chunks, and a local LLM, gemma4:e2b served through Ollama, generates the answer. The conversation flow is orchestrated with LangGraph and delivered through the Next.js E-Office interface with a Bun and Elysia backend. Evaluation uses 40 verified questions with key-fact recall (KFR), step coverage, Topological Inversion Rate (TIR), Actor Mismatch Rate (AMR), refusal accuracy, and token efficiency, complemented by black-box testing of system features. Preliminary tests show that the engine reaches a KFR of 0.955 compared with 0.712 for Naive RAG, a step coverage of 1.000 and a TIR of 0.000, while using 44\% fewer prompt tokens than supplying every document. These results indicate that procedure selection and an explicit workflow representation allow a small, locally hosted LLM to give complete and correctly ordered procedural answers.
+
+\vspace{12pt}
+\noindent Keywords : Retrieval-Augmented Generation, GraphRAG, workflow graph, SOP, E-Office, virtual assistant, local LLM
+\par\endgroup
+\end{otherlanguage}
+\clearpage
