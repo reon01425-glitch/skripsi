@@ -101,7 +101,32 @@
 % ---------- Tabel: isi satu spasi, header abu-abu 25 %, kolom "No" ------
 \RequirePackage{array,tabularx,longtable,booktabs,multirow,makecell}
 \RequirePackage[table]{xcolor}
-\newcommand{\hdr}{\rowcolor{gray!25}}               % shading header 25 %
+% ---------- Mode gelap (opsional): xelatex -jobname=skripsi-dark "\def\darkmode{}\input{skripsi}"
+\ifdefined\darkmode
+  \definecolor{white}{HTML}{121212}   % latar
+  \definecolor{black}{HTML}{E6E6E6}   % teks dan garis
+  \definecolor{g6}{gray}{0.100}
+  \definecolor{g8}{gray}{0.110}
+  \definecolor{g10}{gray}{0.120}
+  \definecolor{g15}{gray}{0.145}
+  \definecolor{g20}{gray}{0.170}
+  \definecolor{g25}{gray}{0.195}
+  \definecolor{g55}{gray}{0.345}
+  \definecolor{g60}{gray}{0.370}
+  \definecolor{hdrbg}{gray}{0.28}
+  \AtBeginDocument{\pagecolor{white}\color{black}\renewcommand{\normalcolor}{\color{black}}}
+\else
+  \definecolor{g6}{gray}{0.970}
+  \definecolor{g8}{gray}{0.960}
+  \definecolor{g10}{gray}{0.950}
+  \definecolor{g15}{gray}{0.925}
+  \definecolor{g20}{gray}{0.900}
+  \definecolor{g25}{gray}{0.875}
+  \definecolor{g55}{gray}{0.725}
+  \definecolor{g60}{gray}{0.700}
+  \definecolor{hdrbg}{gray}{0.75}% = shading Word "Gray-25%"
+\fi
+\newcommand{\hdr}{\rowcolor{hdrbg}}               % shading header 25 %
 \newcommand{\hrow}{\rule[-0.32cm]{0pt}{1cm}}         % tinggi header 1,0 cm
 \newcommand{\tabsetup}{\setstretch{1}\small\renewcommand{\arraystretch}{1.15}}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}

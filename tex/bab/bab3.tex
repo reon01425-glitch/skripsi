@@ -138,7 +138,7 @@ Arsitektur asisten virtual dan integrasinya dengan E-Office ditunjukkan pada Gam
   box/.style={draw, rounded corners=2pt, align=center, minimum height=1.1cm, text width=2.7cm, fill=white},
   db/.style={draw, cylinder, shape border rotate=90, aspect=0.22, align=center, minimum height=1.2cm, text width=2.3cm, fill=white},
   arr/.style={{Stealth[length=2mm]}-{Stealth[length=2mm]}, thick},
-  lane/.style={draw=gray!60, rounded corners=4pt, fill=gray!6, inner sep=2.5mm}]
+  lane/.style={draw=g60, rounded corners=4pt, fill=g6, inner sep=2.5mm}]
 \node[box] (ui) at (0,0) {Antarmuka E-Office\\(Next.js)\\widget percakapan};
 \node[box] (be) at (4.5,0) {\textit{Backend} E-Office\\(Bun + Elysia)};
 \node[db]  (pg) at (4.5,-2.6) {PostgreSQL\\(surat, riwayat)};
@@ -184,7 +184,7 @@ Alur pemrosesan pertanyaan dirancang sebagai graf keadaan LangGraph seperti ditu
 \centering
 \begin{tikzpicture}[font=\normalsize,
   nd/.style={draw, rounded corners=2pt, align=center, minimum height=1.05cm, text width=3.5cm, fill=white},
-  tm/.style={draw, rounded rectangle, minimum height=0.85cm, minimum width=2cm, fill=gray!15},
+  tm/.style={draw, rounded rectangle, minimum height=0.85cm, minimum width=2cm, fill=g15},
   arr/.style={-{Stealth[length=2.2mm]}, thick},
   cond/.style={-{Stealth[length=2.2mm]}, thick, dashed},
   lb/.style={font=\small, fill=white, inner sep=1pt, align=center}]
@@ -401,7 +401,7 @@ Jadwal pelaksanaan penelitian ditunjukkan pada Tabel~\ref{tab:jadwal}. % TODO: s
 \caption{Jadwal Penelitian}
 \label{tab:jadwal}
 \centering\tabsetup
-\newcommand{\x}{\cellcolor{gray!55}}
+\newcommand{\x}{\cellcolor{g55}}
 \begin{tabular}{|c|L{5.0cm}|C{1.05cm}|C{1.05cm}|C{1.05cm}|C{1.05cm}|C{1.05cm}|C{1.05cm}|}
 \hline\hdr
 \textbf{No} & \textbf{Kegiatan} & \textbf{Okt} & \textbf{Nov} & \textbf{Des} & \textbf{Jan} & \textbf{Feb} & \textbf{Mar} \\\hline

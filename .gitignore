@@ -12,3 +12,5 @@ tex/*/*.aux
 .DS_Store
 tex/*.listing
 ~$*
+tex/docx-build/
+tex/*.xdv

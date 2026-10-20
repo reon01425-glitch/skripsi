@@ -41,7 +41,7 @@ Alur ini juga merupakan alur kerja berarah, sehingga cocok dengan pendekatan gra
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[font=\normalsize,
-  st/.style={draw, rounded corners=3pt, minimum width=2.6cm, minimum height=1cm, align=center, fill=gray!8},
+  st/.style={draw, rounded corners=3pt, minimum width=2.6cm, minimum height=1cm, align=center, fill=g8},
   ac/.style={font=\normalsize\itshape, align=center},
   arr/.style={-{Stealth[length=2.2mm]}, thick}]
 \node[st] (s1) at (0,0)    {\code{SUBMITTED}};
@@ -124,7 +124,7 @@ LLM berbobot terbuka seperti LLaMA \parencite{touvron2023llama} dan Gemma \paren
 \begin{tikzpicture}[font=\normalsize,
   box/.style={draw, rounded corners=2pt, align=center, minimum height=1.1cm, text width=2.2cm, fill=white},
   arr/.style={-{Stealth[length=2mm]}, thick},
-  lane/.style={draw=gray!60, rounded corners=4pt, fill=gray!6, inner sep=2.5mm}]
+  lane/.style={draw=g60, rounded corners=4pt, fill=g6, inner sep=2.5mm}]
 \node[box] (d) at (0,0) {Dokumen\\SOP};
 \node[box] (c) at (3.2,0) {\textit{Chunking}};
 \node[box] (e) at (6.4,0) {Embedding};
@@ -222,8 +222,8 @@ Sisi graf terdiri atas \code{HAS\_STEP}$(v_{\text{root}},v_i)$, \code{NEXT\_STEP
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}[font=\normalsize,
-  new/.style={draw=black, fill=gray!10, rounded corners=2pt, align=center, minimum height=1cm, text width=2.5cm, thick},
-  pill/.style={draw, rounded corners=3.5mm, align=center, minimum height=0.75cm, inner xsep=2mm, fill=gray!20},
+  new/.style={draw=black, fill=g10, rounded corners=2pt, align=center, minimum height=1cm, text width=2.5cm, thick},
+  pill/.style={draw, rounded corners=3.5mm, align=center, minimum height=0.75cm, inner xsep=2mm, fill=g20},
   next/.style={-{Stealth[length=2.4mm]}, very thick},
   has/.style={-{Stealth[length=2mm]}, dashed},
   perf/.style={-{Stealth[length=2mm]}, densely dotted, thick}]

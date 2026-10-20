@@ -12,6 +12,9 @@ make            # xelatex -> biber -> xelatex -> xelatex  => skripsi.pdf
 
 - Perlu **XeLaTeX** dan **biber** (sudah ada di MacTeX / TeX Live penuh).
 - **Overleaf:** Menu → Compiler: *XeLaTeX*. Biber dipakai otomatis.
+- `make dark` → `skripsi-dark.pdf` (latar gelap, teks terang; untuk membaca di layar).
+- `make docx` → `skripsi.docx` (versi Word yang dapat diedit; perlu pandoc dan python-docx).
+  Saat dibuka, Word menanyakan pembaruan *field*: pilih **Yes** agar daftar isi, daftar tabel, dan daftar gambar terisi.
 - Fontasi: Times New Roman jika terpasang (Mac/Windows), selain itu TeX Gyre Termes (tampilan hampir sama).
 
 ## Struktur
