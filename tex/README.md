@@ -46,7 +46,7 @@ make            # xelatex -> biber -> xelatex -> xelatex  => skripsi.pdf
 
 Cari `TODO` di berkas `.tex`:
 
-1. NIM, gelar dan NIP pembimbing, pembimbing 2.
+1. Gelar Pak Indra dan pembimbing 2.
 2. Kepanjangan SA, MTU, dan UPA pada alur status surat E-Office.
 3. Kesamaan 7 SOP persuratan E-Office dengan korpus paper.
 4. Jadwal penelitian (sesuaikan dengan tanggal seminar proposal).
