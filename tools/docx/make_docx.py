@@ -566,8 +566,10 @@ def two_col(rows, gap_rows=()):
 
 JUDUL_I = re.sub(r'\\textit\{(.*?)\}', r'*\1*', JUDUL_TEX)
 # --- sampul
-for ln in ['ASISTEN VIRTUAL BERBASIS *PROCESS-AWARE*', '*WORKFLOW* GRAPHRAG UNTUK LAYANAN PERSURATAN',
-           'AKADEMIK PADA SISTEM E-OFFICE', '(Studi Kasus: Fakultas Sains dan Matematika', 'Universitas Diponegoro)']:
+_samp = rd('front/sampul.tex')
+_samp = _samp.split('\\setstretch{1.43}\n', 1)[1].split('\\vfill', 1)[0]
+COVER = [re.sub(r'\\textit\{(.*?)\}', r'*\1*', l.replace('\\\\', '').strip()) for l in _samp.strip().split('\n') if l.strip()]
+for ln in COVER:
     P(ln, WD_ALIGN_PARAGRAPH.CENTER, bold=True)
 P(); lp = P(align=WD_ALIGN_PARAGRAPH.CENTER)
 lp.add_run().add_picture(os.path.join(TEX, 'img', 'logo-undip.png'), width=Cm(4.0), height=Cm(4.4))

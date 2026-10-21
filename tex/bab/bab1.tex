@@ -8,23 +8,23 @@ Bab pendahuluan ini membahas mengenai latar belakang masalah, rumusan masalah, t
 \label{sec:latar}
 Layanan administrasi akademik di Fakultas Sains dan Matematika (FSM) Universitas Diponegoro, seperti izin cuti akademik, permohonan aktif kembali setelah cuti, legalisir ijazah dan transkrip, pengisian Isian Rencana Studi (IRS), izin keterlambatan pembayaran Uang Kuliah Tunggal (UKT), rekomendasi beasiswa, dan pengajuan proposal kegiatan organisasi mahasiswa, dijalankan berdasarkan Standar Operasional Prosedur (SOP). Setiap SOP menetapkan urutan langkah, pejabat atau unit yang melaksanakan setiap langkah, dokumen yang dibutuhkan, dan keluaran yang dihasilkan. Mahasiswa yang tidak memahami SOP cenderung bertanya berulang kali kepada staf tata usaha tentang hal yang sama, sehingga waktu staf tersita untuk menjawab pertanyaan rutin dan mahasiswa harus menunggu jam layanan untuk memperoleh jawaban.
 
-Sebagian layanan tersebut berujung pada pengajuan surat, misalnya surat permohonan cuti atau surat rekomendasi beasiswa. Untuk itu, penulis mengembangkan sistem persuratan digital E-Office yang memindahkan pengajuan surat dari kertas ke alur elektronik, sejalan dengan arah Sistem Pemerintahan Berbasis Elektronik \parencite{perpres95_2018}. Setiap surat di E-Office bergerak melalui status yang berurutan, yaitu \code{SUBMITTED}, \code{VERIFIED}, \code{SIGNED}, dan \code{REGISTERED}, dan diproses oleh aktor yang berbeda pada setiap tahap. Sistem ini mempercepat pemrosesan surat, tetapi belum menjawab pertanyaan mahasiswa tentang prosedur yang harus ditempuh sebelum dan selama surat diproses. Kebutuhan akan kanal tanya jawab yang tersedia setiap saat dan terhubung langsung dengan E-Office menjadi dasar pengembangan asisten virtual dalam penelitian ini.
+Sebagian layanan tersebut berujung pada pengajuan surat, misalnya surat permohonan cuti atau surat rekomendasi beasiswa. Untuk itu, penulis mengembangkan sistem persuratan digital E-Office yang memindahkan pengajuan surat dari kertas ke alur elektronik, sejalan dengan arah Sistem Pemerintahan Berbasis Elektronik \parencite{perpres95_2018}. Setiap surat di E-Office bergerak melalui status yang berurutan, yaitu \code{SUBMITTED}, \code{VERIFIED}, \code{SIGNED}, dan \code{REGISTERED}, dan diproses oleh aktor yang berbeda pada setiap tahap. Sistem ini mempercepat pemrosesan surat, tetapi belum menjawab pertanyaan mahasiswa tentang prosedur yang harus ditempuh sebelum dan selama surat diproses. Kebutuhan akan kanal tanya jawab yang tersedia setiap saat dan terhubung langsung dengan E-Office menjadi dasar pengembangan chatbot dalam penelitian ini.
 
-Asisten virtual berbasis \textit{Large Language Model} (LLM) mampu memahami pertanyaan dalam bahasa alami dan menyusun jawaban yang luwes \parencite{brown2020gpt3}. Namun, LLM dapat menghasilkan informasi yang tampak meyakinkan tetapi tidak sesuai fakta \parencite{ji2023hallucination}, dan LLM berbasis \textit{cloud} menimbulkan biaya per kueri serta mengirim data mahasiswa ke pihak ketiga. LLM berukuran kecil (2 hingga 5 miliar parameter) yang dijalankan secara lokal menghindari kedua masalah tersebut, tetapi lebih mudah terganggu oleh konteks yang tidak relevan \parencite{liu2024lost}. Dalam jawaban administratif, kesalahan kecil berdampak nyata: langkah yang tertukar, pejabat yang salah, atau dokumen yang terlewat membuat mahasiswa datang ke loket yang salah.
+Chatbot berbasis \textit{Large Language Model} (LLM) mampu memahami pertanyaan dalam bahasa alami dan menyusun jawaban yang luwes \parencite{brown2020gpt3}. Namun, LLM dapat menghasilkan informasi yang tampak meyakinkan tetapi tidak sesuai fakta \parencite{ji2023hallucination}, dan LLM berbasis \textit{cloud} menimbulkan biaya per kueri serta mengirim data mahasiswa ke pihak ketiga. LLM berukuran kecil (2 hingga 5 miliar parameter) yang dijalankan secara lokal menghindari kedua masalah tersebut, tetapi lebih mudah terganggu oleh konteks yang tidak relevan \parencite{liu2024lost}. Dalam jawaban administratif, kesalahan kecil berdampak nyata: langkah yang tertukar, pejabat yang salah, atau dokumen yang terlewat membuat mahasiswa datang ke loket yang salah.
 
 \textit{Retrieval-Augmented Generation} (RAG) mengurangi masalah tersebut dengan menyertakan potongan dokumen yang relevan ke dalam \textit{prompt} sebelum LLM menjawab \parencite{lewis2020rag,gao2023ragsurvey}. Penelitian sebelumnya di FSM telah menerapkan RAG pada chatbot layanan kemahasiswaan dan membandingkannya dengan RASA \parencite{sutantio2026perbandingan}, serta menggabungkan keduanya dalam chatbot hibrida berbasis web \parencite{sahnah2026pengembangan}. Kedua penelitian tersebut memperlakukan SOP sebagai teks biasa. Karena SOP FSM pendek, setiap SOP menjadi satu potongan dokumen, sehingga pencarian tiga potongan teratas selalu memasukkan tiga SOP utuh yang memakai kosakata serupa (misalnya dekan, subbagian akademik, verifikasi, dan tanda tangan). Akibatnya, LLM harus memisahkan prosedur yang saling bersaing dan berisiko mencampurkan langkah dari SOP lain atau membalik urutan langkah. GraphRAG menambahkan struktur graf pada proses temu kembali \parencite{peng2024graphragsurvey,edge2024graphrag}, tetapi graf yang umum digunakan adalah graf entitas-relasi \parencite{guo2024lightrag,gutierrez2024hipporag} yang tidak menyimpan urutan eksekusi maupun aktor pada setiap langkah.
 
 Penelitian pendahuluan penulis bersama pembimbing mengusulkan \wgr{}, yaitu pendekatan yang memodelkan setiap SOP sebagai graf alur kerja berarah \parencite{dumas2018fundamentals}, memilih SOP target dengan pemilih berbasis aturan, lalu menyerahkan langkah-langkah yang berurutan kepada LLM lokal \parencite{wiratama2026procedure}. Pada 40 pertanyaan terverifikasi, pendekatan ini mencapai \textit{key-fact recall} 0,955 dibandingkan 0,712 pada Naive RAG, cakupan langkah 1,000 tanpa pembalikan urutan, dan menggunakan 44\% lebih sedikit token \textit{prompt} dibandingkan pemberian seluruh SOP. Studi ablasi pada penelitian tersebut juga menunjukkan bahwa peningkatan kelengkapan jawaban terutama berasal dari pemilihan SOP yang tepat, sedangkan graf alur kerja memberikan urutan yang konsisten, atribusi aktor yang eksplisit, dan \textit{prompt} yang lebih ringkas. Penelitian tersebut masih berupa eksperimen terhadap mesin RAG dan belum diterapkan sebagai layanan yang dapat digunakan mahasiswa.
 
-Berdasarkan uraian tersebut, penelitian ini mengembangkan asisten virtual untuk layanan persuratan akademik yang terintegrasi dengan sistem E-Office dan menggunakan \wgr{} sebagai mesin tanya jawabnya. Asisten virtual dijalankan dengan LLM lokal agar data mahasiswa tetap berada di lingkungan kampus, diorkestrasi menggunakan LangGraph \parencite{langgraph2024}, dan dievaluasi dengan metrik prosedural yang mengukur kelengkapan, urutan, dan ketepatan aktor pada jawaban, serta pengujian fungsional terhadap sistem.
+Berdasarkan uraian tersebut, penelitian ini mengembangkan chatbot layanan akademik dan kemahasiswaan yang terintegrasi dengan sistem E-Office dan menggunakan \wgr{} sebagai mesin tanya jawabnya. Chatbot dijalankan dengan LLM lokal agar data mahasiswa tetap berada di lingkungan kampus, diorkestrasi menggunakan LangGraph \parencite{langgraph2024}, dan dievaluasi dengan metrik prosedural yang mengukur kelengkapan, urutan, dan ketepatan aktor pada jawaban, serta pengujian fungsional terhadap sistem.
 
 \section{Rumusan Masalah}
 \label{sec:rumusan}
 Berdasarkan latar belakang yang telah diuraikan, rumusan masalah dalam penelitian ini sebagai berikut:
 \begin{enumerate}
-\item Bagaimana membangun asisten virtual yang terintegrasi dengan sistem E-Office dan menggunakan \wgr{} untuk menjawab pertanyaan mahasiswa tentang SOP layanan akademik FSM?
-\item Bagaimana kualitas jawaban asisten virtual, yang diukur dengan \textit{key-fact recall}, cakupan langkah, \textit{Topological Inversion Rate}, \textit{Actor Mismatch Rate}, dan akurasi penolakan, dibandingkan dengan RAG berbasis potongan teks dan GraphRAG berbasis entitas?
-\item Bagaimana efisiensi asisten virtual dalam hal jumlah token \textit{prompt} dan waktu respons ketika dijalankan dengan LLM lokal?
+\item Bagaimana membangun chatbot yang terintegrasi dengan sistem E-Office dan menggunakan \wgr{} untuk menjawab pertanyaan mahasiswa tentang SOP layanan akademik FSM?
+\item Bagaimana kualitas jawaban chatbot, yang diukur dengan \textit{key-fact recall}, cakupan langkah, \textit{Topological Inversion Rate}, \textit{Actor Mismatch Rate}, dan akurasi penolakan, dibandingkan dengan RAG berbasis potongan teks dan GraphRAG berbasis entitas?
+\item Bagaimana efisiensi chatbot dalam hal jumlah token \textit{prompt} dan waktu respons ketika dijalankan dengan LLM lokal?
 \end{enumerate}
 
 \section{Tujuan dan Manfaat}
@@ -34,16 +34,16 @@ Subbab ini menguraikan tujuan yang ingin dicapai melalui penelitian serta manfaa
 \subsection{Tujuan Penelitian}
 Tujuan penelitian ini sebagai berikut:
 \begin{enumerate}
-\item Menghasilkan asisten virtual layanan persuratan akademik yang terintegrasi dengan sistem E-Office dan menggunakan \wgr{} dengan LLM lokal.
-\item Mengukur kualitas jawaban prosedural asisten virtual dan membandingkannya dengan Naive RAG serta GraphRAG berbasis entitas menggunakan benchmark pertanyaan yang terverifikasi.
-\item Mengukur efisiensi token \textit{prompt} dan waktu respons asisten virtual sebagai dasar kelayakan penerapan di lingkungan fakultas.
+\item Menghasilkan chatbot layanan akademik dan kemahasiswaan yang terintegrasi dengan sistem E-Office dan menggunakan \wgr{} dengan LLM lokal.
+\item Mengukur kualitas jawaban prosedural chatbot dan membandingkannya dengan Naive RAG serta GraphRAG berbasis entitas menggunakan benchmark pertanyaan yang terverifikasi.
+\item Mengukur efisiensi token \textit{prompt} dan waktu respons chatbot sebagai dasar kelayakan penerapan di lingkungan fakultas.
 \end{enumerate}
 
 \subsection{Manfaat Penelitian}
 Manfaat yang diharapkan dari penelitian ini sebagai berikut:
 \begin{enumerate}
-\item Bagi mahasiswa, asisten virtual menyediakan informasi prosedur layanan akademik yang lengkap, berurutan, dan dapat diakses setiap saat langsung dari E-Office.
-\item Bagi staf administrasi FSM, asisten virtual mengurangi beban menjawab pertanyaan berulang sehingga staf dapat berfokus pada pemrosesan surat.
+\item Bagi mahasiswa, chatbot menyediakan informasi prosedur layanan akademik yang lengkap, berurutan, dan dapat diakses setiap saat langsung dari E-Office.
+\item Bagi staf administrasi FSM, chatbot mengurangi beban menjawab pertanyaan berulang sehingga staf dapat berfokus pada pemrosesan surat.
 \item Bagi fakultas, penggunaan LLM lokal menjaga data mahasiswa tetap berada di lingkungan kampus dan menghindari biaya layanan LLM berbasis \textit{cloud}.
 \item Bagi bidang keilmuan, penelitian ini memberikan contoh penerapan GraphRAG berbasis alur kerja pada sistem nyata beserta evaluasi prosedural yang dapat direplikasi.
 \end{enumerate}
@@ -55,8 +55,8 @@ Ruang lingkup penelitian ini sebagai berikut:
 \item Basis pengetahuan terdiri atas 7 SOP layanan mahasiswa yang diterbitkan FSM Universitas Diponegoro, yaitu izin cuti akademik, permohonan aktif kembali setelah cuti, legalisir ijazah dan transkrip, pengisian IRS, izin keterlambatan pembayaran UKT, rekomendasi beasiswa, dan pengajuan proposal kegiatan organisasi mahasiswa. % TODO: konfirmasi bahwa SOP persuratan E-Office sama dengan korpus paper
 \item Graf alur kerja disusun secara manual dari dokumen SOP dan diimplementasikan menggunakan NetworkX \parencite{hagberg2008networkx}.
 \item LLM utama yang digunakan adalah \texttt{gemma4:e2b} yang dijalankan secara lokal melalui Ollama \parencite{ollama2023}; satu LLM lokal lain digunakan sebagai pembanding.
-\item Asisten virtual hanya menjawab pertanyaan berbahasa Indonesia yang berkaitan dengan ketujuh SOP serta status surat milik pengguna di E-Office, dan menolak pertanyaan di luar cakupan tersebut.
-\item Asisten virtual diintegrasikan ke sistem E-Office yang dibangun dengan Next.js pada sisi antarmuka serta Bun dan Elysia pada sisi \textit{backend}, dengan basis data PostgreSQL.
+\item Chatbot hanya menjawab pertanyaan berbahasa Indonesia yang berkaitan dengan ketujuh SOP serta status surat milik pengguna di E-Office, dan menolak pertanyaan di luar cakupan tersebut.
+\item Chatbot diintegrasikan ke sistem E-Office yang dibangun dengan Next.js pada sisi antarmuka serta Bun dan Elysia pada sisi \textit{backend}, dengan basis data PostgreSQL.
 \item Evaluasi kualitas jawaban menggunakan benchmark 40 pertanyaan terverifikasi yang terdiri atas 35 pertanyaan yang dapat dijawab dan 5 pertanyaan di luar cakupan, sedangkan evaluasi fungsional menggunakan pengujian \textit{black-box}.
 \end{enumerate}
 
@@ -71,7 +71,7 @@ Bab ini membahas penelitian terkait serta dasar teori yang digunakan, meliputi s
 \item BAB III METODOLOGI PENELITIAN\\
 Bab ini membahas tahapan penelitian, mulai dari pengumpulan data, analisis kebutuhan, perancangan, implementasi, hingga pengujian dan evaluasi, serta jadwal penelitian.
 \item BAB IV HASIL DAN PEMBAHASAN\\
-Bab ini membahas hasil implementasi asisten virtual, hasil evaluasi kualitas jawaban dan efisiensi, hasil pengujian fungsional, serta pembahasannya.
+Bab ini membahas hasil implementasi chatbot, hasil evaluasi kualitas jawaban dan efisiensi, hasil pengujian fungsional, serta pembahasannya.
 \item BAB V PENUTUP\\
 Bab ini berisi kesimpulan dari hasil penelitian dan saran untuk penelitian selanjutnya.
 \end{enumerate}

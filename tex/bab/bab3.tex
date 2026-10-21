@@ -91,13 +91,13 @@ Selain benchmark tersebut, penelitian ini menambahkan pertanyaan tentang status 
 % ---------------------------------------------------------------------
 \section{Analisis Kebutuhan}
 \label{sec:kebutuhan}
-Subbab ini menguraikan kebutuhan fungsional dan nonfungsional asisten virtual berdasarkan studi literatur, analisis sistem E-Office, dan hasil wawancara.
+Subbab ini menguraikan kebutuhan fungsional dan nonfungsional chatbot berdasarkan studi literatur, analisis sistem E-Office, dan hasil wawancara.
 
 \subsection{Kebutuhan Fungsional}
-Kebutuhan fungsional asisten virtual ditunjukkan pada Tabel~\ref{tab:fungsional}.
+Kebutuhan fungsional chatbot ditunjukkan pada Tabel~\ref{tab:fungsional}.
 
 \begin{table}[htbp]
-\caption{Kebutuhan Fungsional Asisten Virtual}
+\caption{Kebutuhan Fungsional Chatbot}
 \label{tab:fungsional}
 \centering\tabsetup
 \begin{tabularx}{\linewidth}{|C{0.6cm}|C{1.5cm}|Y|}
@@ -115,13 +115,13 @@ Kebutuhan fungsional asisten virtual ditunjukkan pada Tabel~\ref{tab:fungsional}
 \end{table}
 
 \subsection{Kebutuhan Nonfungsional}
-Kebutuhan nonfungsional asisten virtual sebagai berikut:
+Kebutuhan nonfungsional chatbot sebagai berikut:
 \begin{enumerate}
 \item Privasi, yaitu seluruh pemrosesan LLM dilakukan secara lokal sehingga pertanyaan dan data surat mahasiswa tidak dikirim ke layanan pihak ketiga.
 \item Ketepatan, yaitu jawaban prosedural tidak membalik urutan langkah dan tidak menyebut aktor yang salah.
 \item Kinerja, yaitu waktu respons cukup singkat untuk percakapan interaktif pada perangkat keras fakultas.
 \item Keterpeliharaan, yaitu SOP baru dapat ditambahkan dengan menambah data graf tanpa mengubah kode mesin RAG.
-\item Keamanan, yaitu hanya pengguna terautentikasi yang dapat menggunakan asisten virtual, dan status surat hanya ditampilkan kepada pemiliknya.
+\item Keamanan, yaitu hanya pengguna terautentikasi yang dapat menggunakan chatbot, dan status surat hanya ditampilkan kepada pemiliknya.
 \end{enumerate}
 
 % ---------------------------------------------------------------------
@@ -130,7 +130,7 @@ Kebutuhan nonfungsional asisten virtual sebagai berikut:
 Subbab ini membahas rancangan arsitektur sistem, graf alur kerja, alur LangGraph, \textit{prompt}, antarmuka pemrograman aplikasi, dan basis data.
 
 \subsection{Arsitektur Sistem}
-Arsitektur asisten virtual dan integrasinya dengan E-Office ditunjukkan pada Gambar~\ref{fig:arsitektur}. Pengguna berinteraksi melalui widget percakapan pada antarmuka Next.js. Pertanyaan dikirim ke \textit{backend} E-Office (Bun dan Elysia), yang memeriksa autentikasi pengguna lalu meneruskan pertanyaan beserta identitas pengguna ke layanan RAG. Layanan RAG menjalankan alur LangGraph, membaca graf alur kerja dan indeks vektor, memanggil LLM lokal melalui Ollama, dan jika diperlukan meminta data status surat dari \textit{backend} E-Office.
+Arsitektur chatbot dan integrasinya dengan E-Office ditunjukkan pada Gambar~\ref{fig:arsitektur}. Pengguna berinteraksi melalui widget percakapan pada antarmuka Next.js. Pertanyaan dikirim ke \textit{backend} E-Office (Bun dan Elysia), yang memeriksa autentikasi pengguna lalu meneruskan pertanyaan beserta identitas pengguna ke layanan RAG. Layanan RAG menjalankan alur LangGraph, membaca graf alur kerja dan indeks vektor, memanggil LLM lokal melalui Ollama, dan jika diperlukan meminta data status surat dari \textit{backend} E-Office.
 
 \begin{figure}[htbp]
 \centering
@@ -159,7 +159,7 @@ Arsitektur asisten virtual dan integrasinya dengan E-Office ditunjukkan pada Gam
 \node[anchor=south, font=\normalsize\bfseries] at (l2.north) {Sistem E-Office};
 \node[anchor=south, font=\normalsize\bfseries] at (l3.north) {Server lokal fakultas};
 \end{tikzpicture}
-\caption{Arsitektur Asisten Virtual pada Sistem E-Office}
+\caption{Arsitektur Chatbot pada Sistem E-Office}
 \label{fig:arsitektur}
 \end{figure}
 
@@ -211,7 +211,7 @@ Alur pemrosesan pertanyaan dirancang sebagai graf keadaan LangGraph seperti ditu
 \draw[arr] (rf.south) |- (en.east);
 \draw[arr] (an.south) |- (en.west);
 \end{tikzpicture}
-\caption{Rancangan Alur LangGraph Asisten Virtual}
+\caption{Rancangan Alur LangGraph Chatbot}
 \label{fig:langgraph}
 \end{figure}
 
